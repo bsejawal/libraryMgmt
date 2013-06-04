@@ -15,24 +15,7 @@
 			<td>${user.email}</td>
 			<td>${user.phone}</td>
 			<td>${user.userType}</td>
-			<td><a class="pop" href="?action=form">Update your profile</a></td>
+			<td><a class="pop" href="?action=form&id=${user.id}">Update your profile</a></td>
 		</tr>
 </table>
 <a class="testPopup" href="#testDiv">ClickMe</a>
-<div style="display:none;">
-	<div id="testDiv">
-	Test pop updf a sdfas
-	</div>
-</div>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$(".testPopup").fancybox({
-			'transitionIn' : 'fade',
-			'transitionOut' : 'fade',
-			'speedIn' : 600,
-			'speedOut' : 200,
-			'overlayShow' : true,
-			'autoScale' : true
-		});
-	});
-</script>
