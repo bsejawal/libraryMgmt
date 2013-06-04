@@ -9,19 +9,18 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * Servlet Filter implementation class SecurityFilter
  */
 public class SecurityFilter implements Filter {
 
-    /**
-     * Default constructor. 
-     */
-    public SecurityFilter() {
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * Default constructor.
+	 */
+	public SecurityFilter() {
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see Filter#destroy()
@@ -34,15 +33,23 @@ public class SecurityFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	@SuppressWarnings("unused")
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest httpRequest=(HttpServletRequest) request;
-		HttpServletResponse httpReponse=(HttpServletResponse) response;
-		HttpSession session=httpRequest.getSession();		
+	public void doFilter(ServletRequest request, ServletResponse response,
+			FilterChain chain) throws IOException, ServletException {
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		HttpServletResponse httpReponse = (HttpServletResponse) response;
 		String requestURL = httpRequest.getRequestURL().toString();
 		String requestURI = httpRequest.getRequestURI().toString();
-		String contextPath =httpRequest.getContextPath();
+		String contextPath = httpRequest.getContextPath();
+		if (requestURI.endsWith("/user")) {
+			if (httpRequest.getSession().getAttribute("isLogin") == null
+					|| httpRequest.getSession().getAttribute("isLogin") != "true") {
+				httpReponse.sendRedirect("login");
+				return;
+			}
+		}
+		System.out.println("Uri :" + requestURI + " Url ::" + requestURL);
 		// pass the request along the filter chain
-	chain.doFilter(request, response);
+		chain.doFilter(request, response);
 	}
 
 	/**

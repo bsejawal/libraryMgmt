@@ -24,6 +24,7 @@ public class UserController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		setInstanceVariables(request, response);
 		System.out.println("~~~user->doGet~~~");
+		System.out.println("---->>>> "+request.getSession().getAttribute("isLogin"));
 		if (params.get("action").equals("")
 				|| params.get("action").equals("index"))
 			index();
@@ -56,7 +57,6 @@ public class UserController extends HttpServlet {
 			params.put("action", "index");
 		if (!params.containsKey("id"))
 			params.put("id", "0");
-		System.out.println("Params ::"+params);
 	}
 
 	protected void index() throws ServletException, IOException {
@@ -68,7 +68,7 @@ public class UserController extends HttpServlet {
 
 	private void form() throws ServletException, IOException {
 		System.out.println("~~~user->form~~~");
-		request.getRequestDispatcher("views/user/form.jsp").include(request,
+		request.getRequestDispatcher("views/user/form.jsp").forward(request,
 				response);
 	}
 }
