@@ -11,7 +11,7 @@
 <body>
 <div class="main">
 <div class="header">This is User Header
-<div class="logout"><a href="<c:url value="login/logout" />">Logout</a></div>
+
 </div>
 <decorator:body /></div>
 <div class="footer">Footer</div>

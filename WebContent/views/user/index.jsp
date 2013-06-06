@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="true" %>
+<div class="logout"><a href="<c:url value="login?action=logout" />">Logout</a></div>
 <h1>this is test User</h1>
 <table>
 	<tr>

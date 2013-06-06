@@ -3,6 +3,8 @@ package services.edu.smude;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
+import utilities.Utils;
 
 import conf.Dao;
 import conf.DataSource;
@@ -56,7 +58,7 @@ public class UserService extends Dao{
 		return list;
 	}
 	
-	public User find_by_id(int id){
+	public static User find_by_id(int id){
 		return instantiateSingleRow(findById(table, id));
 	}
 	
@@ -66,6 +68,32 @@ public class UserService extends Dao{
 	public static boolean isConnection() throws InstantiationException, IllegalAccessException{
 		if(connection==null) return DataSource.connect();
 		else return true;
+	}
+	public static boolean save(Map<String, String> param) throws InstantiationException, IllegalAccessException{
+		isConnection();
+		User user;
+		if(param.containsKey("id") && !Utils.isNull(param.get("id")) && param.get("id")!="0")
+			user = find_by_id(Integer.parseInt(param.get("id")));
+		else
+			user = new User();
+		instantiateUser(user, param);
+		
+		return false;
+		
+	}
+	private static void instantiateUser(User user, Map<String, String> param){
+		if(!Utils.isNull(param.get("email"))) user.setEmail(param.get("email"));
+		if(!Utils.isNull(param.get("name"))) user.setName(param.get("name"));
+		if(!Utils.isNull(param.get("phone"))) user.setName(param.get("phone"));
+		if(!Utils.isNull(param.get("username"))) user.setUsername(param.get("username"));
+		if(!Utils.isNull(param.get("password"))) user.setPassword(param.get("password"));
+		if(!Utils.isNull(param.get("userType"))) user.setUserType(param.get("userType"));		
+	}
+	private void prepareForSave(User user) throws SQLException{
+		if(user.getId()){
+			
+		}
+		preparedStatement=connection.prepareStatement("SELECT * FROM "+table+" WHERE `username`=? AND `password`=md5(?) LIMIT 1");
 	}
 	
 }

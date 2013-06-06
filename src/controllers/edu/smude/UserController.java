@@ -11,6 +11,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import services.edu.smude.UserService;
 import domains.edu.smude.User;
 
 public class UserController extends HttpServlet {
@@ -24,7 +26,8 @@ public class UserController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		setInstanceVariables(request, response);
 		System.out.println("~~~user->doGet~~~");
-		System.out.println("---->>>> "+request.getSession().getAttribute("isLogin"));
+		System.out.println("---->>>> "
+				+ request.getSession().getAttribute("isLogin"));
 		if (params.get("action").equals("")
 				|| params.get("action").equals("index"))
 			index();
@@ -34,8 +37,20 @@ public class UserController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		setInstanceVariables(request, response);
 		System.out.println("~~~user->doPost~~~");
+		setInstanceVariables(request, response);
+		if (params.get("action").equals("save")) {
+			try {
+				save();
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 
 	}
 
@@ -61,14 +76,25 @@ public class UserController extends HttpServlet {
 
 	protected void index() throws ServletException, IOException {
 		System.out.println("~~~user->index~~~");
-		request.setAttribute("user", (User) request.getSession().getAttribute("user"));
-		System.out.println("is login ::"+request.getSession().getAttribute("isLogin"));
-		request.getRequestDispatcher("views/user/index.jsp").forward(request,response);
+		request.setAttribute("user", (User) request.getSession().getAttribute(
+				"user"));
+		System.out.println("is login ::"
+				+ request.getSession().getAttribute("isLogin"));
+		request.getRequestDispatcher("views/user/index.jsp").forward(request,
+				response);
 	}
 
 	private void form() throws ServletException, IOException {
 		System.out.println("~~~user->form~~~");
 		request.getRequestDispatcher("views/user/form.jsp").forward(request,
 				response);
+	}
+
+	private void save() throws ServletException, IOException,
+			InstantiationException, IllegalAccessException {
+		System.out.println("~~~user->save~~~");
+		if (UserService.save(params)) {
+
+		}
 	}
 }
