@@ -90,9 +90,9 @@ public class UserService extends Dao{
 		if(!Utils.isNull(param.get("userType"))) user.setUserType(param.get("userType"));		
 	}
 	private void prepareForSave(User user) throws SQLException{
-		if(user.getId()){
+//		if(user.getId()){
 			
-		}
+//		}
 		preparedStatement=connection.prepareStatement("SELECT * FROM "+table+" WHERE `username`=? AND `password`=md5(?) LIMIT 1");
 	}
 	
