@@ -24,7 +24,7 @@ public class UserService extends Dao{
 	private static User instantiateSingleRow(ResultSet rs){
 		User user = new User();
 		try {
-			while(rs.next()) {
+			while(rs.next()){
 				user.setId(rs.getInt("id"));
 				user.setUsername(rs.getString("username"));
 				user.setPassword(rs.getString("password"));
@@ -89,11 +89,25 @@ public class UserService extends Dao{
 		if(!Utils.isNull(param.get("password"))) user.setPassword(param.get("password"));
 		if(!Utils.isNull(param.get("userType"))) user.setUserType(param.get("userType"));		
 	}
-	private void prepareForSave(User user) throws SQLException{
-		if(user.getId()){
+	@SuppressWarnings("unused")
+	private void prepareForSave(User user) throws SQLException{			
+		if(user.getId() == 0){
+			preparedStatement=connection.prepareStatement("INSERT INTO "+table+" (`email`,`name`,`phone`,`username`,`password`,`userType`) VALUES (?,?,?,?,MD5(?),?");
+		}else{			
+			String upPass = "UPDATE "+table+" SET `password`=MD5(?) WHERE `id`=?";
 			
-		}
-		preparedStatement=connection.prepareStatement("SELECT * FROM "+table+" WHERE `username`=? AND `password`=md5(?) LIMIT 1");
+			preparedStatement=connection.prepareStatement("UPDATE "+table+" SET `email`=?,`name`=?,`phone`=?,`username`=?,`userType`=? WHERE `id`=?");
+		}		
+		preparedStatement.setString(1, user.getEmail());
+		preparedStatement.setString(2, user.getName());
+		preparedStatement.setString(1, user.getPhone());
+		preparedStatement.setString(1, user.getUsername());
+	}
+	@SuppressWarnings("unused")
+	private void changePassword(User user) throws SQLException{
+		preparedStatement=connection.prepareStatement("SELECT * FROM "+table+" WHERE password=?");
+		preparedStatement.setString(1, user.getPassword());
 	}
 	
 }
+

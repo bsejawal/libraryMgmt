@@ -1,6 +1,6 @@
-<div style="display: none">
 <div class="dialog">
-<div class="head-style">User Edit</div>
+<div class="closeDialog">c</div>
+<div class="head-style" id="dialog-title">Add User</div>
 <form action="">
 <table>
 	<tr>
@@ -25,16 +25,14 @@
 	</tr>
 	<tr>
 		<td>&nbsp;</td>
-		<td><input type="submit" name="submit" value="Submit"/></td>
+		<td><input type="submit" name="submit" value="Submit" /><input type="reset" onclick="closeDialog()" value="Cancel" /></td>
 	</tr>
 </table>
 </div>
-</div>
 
-<script type="text/javascript">
+<!--<script type="text/javascript">
 	$(document).ready(function() {
 		$(".dialog").dialog( {
-			'overlay' : true,
 			height : 400,
 			width : 500,
 			overlay : {
@@ -48,7 +46,7 @@
 		}).open();
 	});
 </script>
-<!--
+--><!--
 
 <td>${user.name}</td>
 			<td>${user.email}</td>

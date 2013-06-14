@@ -10,10 +10,9 @@
 </head>
 <body>
 <div class="main">
-<div class="header">This is User Header
-
+<div class="header">This is User Header</div>
+<decorator:body />
 </div>
-<decorator:body /></div>
 <div class="footer">Footer</div>
 </body>
 </html>

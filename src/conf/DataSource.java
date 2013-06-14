@@ -61,4 +61,9 @@ public class DataSource {
 		}
 		return result==0? false :true;
 	}
+	public static void close() throws SQLException{
+		if(preparedStatement != null)preparedStatement.clearParameters();
+		if(connection != null)connection.close();
+		
+	}
 }
